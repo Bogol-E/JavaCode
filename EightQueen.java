@@ -1,4 +1,4 @@
-package data3;
+package algo;
 
 class Point2 {
     private int x;
@@ -169,8 +169,8 @@ public class EightQueen {
     }
 
     public static void main(String[] args) {
-        int row = 6;
-        int col = 6;
+        int row = 8;
+        int col = 8;
         int[][] array = new int[row][col];
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {

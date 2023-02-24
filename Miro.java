@@ -1,14 +1,14 @@
-package data3;
+package algo;
 
 class Point {
 	private int x;
 	private int y;
-	private int z;
+
 
 	public Point(int x, int y, int z) {
 		this.x = x;
 		this.y = y;
-		this.z = z;
+	
 	}
 
 	public int getX() {
@@ -19,9 +19,6 @@ class Point {
 		return y;
 	}
 
-	public int getZ() {
-		return z;
-	}
 }
 
 class Stack {
@@ -60,8 +57,12 @@ public class Miro {
 				{ 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0 }, { 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0 },
 				{ 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0 }, };
 
-		int[][] miro = new int[input.length + 2][input[0].length + 2];
-		
+		solveMiro(input);
+
+	}
+
+	private static void solveMiro(int[][] array) {
+		int[][] miro = new int[array.length + 2][array[0].length + 2];
 
 		for (int i = 0; i < miro.length; i++) {
 			for (int j = 0; j < miro[0].length; j++) {
@@ -69,26 +70,22 @@ public class Miro {
 			}
 		}
 
-		for (int i = 0; i < input.length; i++) {
-			for (int j = 0; j < input[0].length; j++) {
-				miro[i + 1][j + 1] = input[i][j];
+		for (int i = 0; i < array.length; i++) {
+			for (int j = 0; j < array[0].length; j++) {
+				miro[i + 1][j + 1] = array[i][j];
 			}
 		}
 
-		movemiro(miro);
+		int[][] mark = new int[array.length+2][array[0].length + 2];
+
+		print(miro);
 
 		
-
-	}
-
-	private static void movemiro(int[][] array) {
-		int i = 1;
-		int j = 1;
-		int[][] mark = new int[array.length][array[0].length + 2];
 		
 		
-		print(mark);
-
+		
+		
+		
 	}
 
 	private static void print(int[][] ary) {

@@ -4,11 +4,10 @@ class Point {
 	private int x;
 	private int y;
 
-
-	public Point(int x, int y, int z) {
+	public Point(int x, int y) {
 		this.x = x;
 		this.y = y;
-	
+
 	}
 
 	public int getX() {
@@ -27,7 +26,7 @@ class Stack {
 
 	public Stack() {
 		top = 0;
-		data = new Point[100];
+		data = new Point[35];
 	}
 
 	public boolean isEmpty() {
@@ -47,20 +46,31 @@ class Stack {
 }
 
 public class Miro {
-
+	
 	public static void main(String[] args) {
-		int[][] input = { { 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1 },
-				{ 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1 }, { 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1 },
-				{ 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0 }, { 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1 },
-				{ 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1 }, { 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1 },
-				{ 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1 }, { 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1 },
-				{ 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0 }, { 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0 },
-				{ 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0 }, };
+		int[][] input = 
+			{ 
+				{ 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1 },
+				{ 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1 }, 
+				{ 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1 },
+				{ 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0 },
+				{ 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1 },
+				{ 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1 },
+				{ 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1 },
+				{ 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1 },
+				{ 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1 },
+				{ 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0 },
+				{ 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0 },
+				{ 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0 },
+				};
+		
 
 		solveMiro(input);
 
 	}
 
+	
+	
 	private static void solveMiro(int[][] array) {
 		int[][] miro = new int[array.length + 2][array[0].length + 2];
 
@@ -76,17 +86,54 @@ public class Miro {
 			}
 		}
 
-		int[][] mark = new int[array.length+2][array[0].length + 2];
+		int[][] mark = new int[array.length][array[0].length];
+		
+		Stack s = new Stack();
+		Point p = new Point(1, 1);
+		int x = 1;
+		int y = 1;
+		miro[x][y]=1;
+		boolean noway = true;
 
-		print(miro);
-
+		while(x!=array.length || y!=array[0].length) {
+			
+			if(miro[x][y+1]==1&&miro[x+1][y]==1&&miro[x+1][y+1]==1&&miro[x-1][y]==1&&
+					miro[x][y-1]==1&&miro[x-1][y-1]==1&&miro[x-1][y+1]==1&&miro[x+1][y-1]==1) {
+				noway=true; p = s.pop();x = p.getX();y = p.getY();};	
+			
+			if((miro[x][y+1]==0||miro[x+1][y]==0||miro[x+1][y+1]==0||miro[x-1][y]==0||
+	        		miro[x][y-1]==0||miro[x-1][y-1]==0||miro[x-1][y+1]==0||miro[x+1][y-1]==0)&&noway==true) {
+				s.push(new Point(x,y));noway=false;};
+			
+			if(miro[x][y+1]==0) { miro[x][++y]=1;  s.push(new Point(x,y));};
+	        if(miro[x+1][y]==0) { miro[++x][y]=1;  s.push(new Point(x,y));};
+	        if(miro[x+1][y+1]==0) { miro[++x][++y]=1; s.push(new Point(x,y));};
+	        if(miro[x][y-1]==0) { miro[x][--y]=1; s.push(new Point(x,y));};
+	        if(miro[x-1][y]==0) { miro[--x][y]=1;  s.push(new Point(x,y));};
+	        if(miro[x-1][y-1]==0) { miro[--x][--y]=1;  s.push(new Point(x,y));};
+	        if(miro[x-1][y+1]==0) {miro[--x][++y]=1;  s.push(new Point(x,y));};
+	        if(miro[x+1][y-1]==0) { miro[++x][--y]=1; s.push(new Point(x,y));};
+	        
+	        
+		}
 		
+		while(!s.isEmpty()) {
+			p = s.pop();
+			x = p.getX();
+			y = p.getY();
+			mark[x-1][y-1]=1;
+		}
 		
-		
-		
-		
-		
+                
+        print(mark);
+   
+        
 	}
+
+        
+	
+		
+		
 
 	private static void print(int[][] ary) {
 		for (int i = 0; i < ary.length; i++) {
@@ -96,5 +143,7 @@ public class Miro {
 			System.out.println();
 		}
 	}
+	
+	
 
 }

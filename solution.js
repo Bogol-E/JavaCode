@@ -30,3 +30,23 @@ function solution(babbling) {
     return answer;
 }
 
+
+
+//수정 풀이
+function solution(babbling) {
+    var answer = 0;
+    let baby = ["aya", "ye", "woo", "ma"];
+    for (let i of babbling) {
+        let k = i;
+
+        for (let j of baby) {
+            k = k.split(j);
+            k = k.join(":");
+        }
+        k = k.split(":");
+        k = k.join("");
+
+        if (k == "") answer++;
+    }
+    return answer;
+}
